@@ -13,14 +13,16 @@ class CreatePlacesTable extends Migration
      */
     public function up()
     {
-        Schema::create('places', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name', 100);
-            $table->boolean('visited')->default(0);
-            $table->timestamps();
-            $table->float('lat');
-            $table->float('lng');
-        });
+        if (!Schema::hasTable('places')) {
+            Schema::create('places', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->string('name', 100);
+                $table->boolean('visited')->default(0);
+                $table->timestamps();
+                $table->float('lat');
+                $table->float('lng');
+            });
+        }
     }
 
     /**
