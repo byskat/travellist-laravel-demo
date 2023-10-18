@@ -17,18 +17,19 @@ services:
       - travellist
 
   db:
-    image: mysql:5.7
-    container_name: travellist-db
+    image: postgres:16
+    container_name: travellist-pgsql
     restart: unless-stopped
+    expose:
+      - "5432"
+    ports:
+      - "5432:5432"
     environment:
-      MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_USER: ${DB_USERNAME}
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USERNAME}
     volumes:
-      - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+      - ./docker-compose/pgsql:/docker-entrypoint-initdb.d
     networks:
       - travellist
 
